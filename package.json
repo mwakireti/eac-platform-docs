@@ -1,0 +1,26 @@
+{
+  "name": "eac-platform-docs",
+  "version": "1.0.0",
+  "description": "EAC Platform Documentation Site",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "framer-motion": "10.16.4",
+    "lucide-react": "0.263.1",
+    "next": "13.5.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "25.5.0",
+    "@types/react": "19.2.14",
+    "autoprefixer": "10.4.16",
+    "postcss": "8.4.31",
+    "tailwindcss": "3.3.5",
+    "typescript": "6.0.2"
+  }
+}

@@ -1,0 +1,373 @@
+'use client';
+
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { motion } from "framer-motion";
+import { ChevronDown, BookOpen, Settings, Users, BarChart3, Lock, Smartphone, AlertCircle, Code } from "lucide-react";
+
+const CATEGORIES = [
+  { id: "all", label: "All Topics", icon: BookOpen },
+  { id: "getting-started", label: "Getting Started", icon: BookOpen },
+  { id: "account", label: "Account & Auth", icon: Users },
+  { id: "management", label: "management", icon: Settings },
+  { id: "admin", label: "Admin & Staff", icon: BarChart3 },
+  { id: "technical", label: "Technical", icon: Code },
+];
+
+const sections = [
+  {
+    id: "getting-started",
+    title: "Getting Started",
+    category: "getting-started",
+    content: "Welcome to the EAC Platform, a comprehensive event and competition management system. This platform is designed to streamline the entire lifecycle of events, from registration and approval to participation and reporting. Whether you're a participant, organisational representative, or staff member, this guide will help you navigate the system efficiently. The platform offers role-based access, ensuring each user type has access to the tools they need. Start by creating your account or logging in to access the features available to you.",
+    images: ["/images/getting-started.jpg", "/images/get-on.jpg"]
+  },
+  {
+    id: "account-registration",
+    title: "Account Registration",
+    category: "account",
+    content: "Creating an account on the EAC Platform is straightforward and secure. Navigate to the registration page and fill in your personal details including full name, email address, and create a secure password. Verify your email address by clicking the confirmation link sent to your inbox within 5 minutes of registration. If you don't receive the email, check your spam folder or request a new verification email. Once verified, you can log in immediately using your email and password. For security purposes, we recommend using a strong password with at least 8 characters, including uppercase, lowercase, numbers, and special characters. If you forget your password, use the 'Forgot Password' feature to reset it securely.",
+    images: ["/images/account-registration.jpg", "/images/get-on.jpg"]
+  },
+  {
+    id: "user-dashboard",
+    title: "User Dashboard For Clubs & Organisations",
+    category: "management",
+    content: "Your personal dashboard is your command center within the EAC Platform. Here you can view your registered events, participation history, profile information, and upcoming competitions. The dashboard displays a summary of your activity, including pending approvals, event schedules, and important notifications. Update your profile by clicking on 'View Profile' to edit your personal information, contact details, and preferences. Manage your event participation from the 'MY DASHBOARD' section where you can view event details, schedules, and your participation status. The dashboard also includes a notification center showing system announcements, event updates, and approval statuses.",
+    images: ["/images/User-Dashboard .jpg", "/images/select-event.jpg"]
+  },
+  {
+    id: "organisation-registration",
+    title: "Club & Organisation Registration Process",
+    category: "account",
+    content: "Organisations such as clubs, schools, and institutions can register on the platform to manage collective participation. Navigate to 'Register Organisation' and provide your organisation's name, registration number, address, and contact information. Designate an organisation manager and coach. Submit your organisation details along with supporting documentation (such as registration certificates or proof of legitimacy). Your submission will be reviewed by staff members and approved within 3-5 business days. Once approved, organisation administrators can manage member accounts, register teams for events, and access organisational reporting features. Organisations have the ability to bulk-register participants and track their performance across multiple events.",
+    images: ["/images/User-Dashboard .jpg", "/images/organisation-form.jpg", "/images/organisation-registration.jpg" , "/images/volunteers.jpg" , "/images/culture-form.png"]
+  },
+  {
+    id: "teams-collaboration",
+    title: "Upload Participants Details",
+    category: "management",
+    content: "Clubs and organisation are allowed to upload participants details on the the choosen competitions form below. Create a team by specifying the team name, role designations, and adding members from your approved participants. Each team can have coaches, managers, and players with clearly defined roles and responsibilities. Team managers can oversee member participation, track attendance, and manage team registrations for events. Collaboration tools include team messaging, shared calendars, and integrated file sharing for strategy documents and schedules. Teams can participate in league formats with ongoing standings and rankings. The platform automatically tracks team statistics, win-loss records, and performance metrics across all events.",
+    images: ["/images/select-event.jpg" , "/images/add-participant.jpg" , "/images/basketball.jpg" , "/images/chess registration form.jpg" , "/images/culture-form.png"]
+  },
+  {
+    id: "staff-portal",
+    title: "Staff Portal",
+    category: "admin",
+    content: "The Staff Portal provides administrative access to manage the entire EAC Platform. Staff members can log in with elevated permissions to access the approval queue, manage user accounts, and oversee event administration. Within the portal, staff can review pending organisation registrations, player approvals, and verify participant credentials. The portal includes tools for creating system-wide announcements, managing event categories, and configuring platform settings. Staff members can generate comprehensive reports on platform usage, event participation, and approval metrics. The portal also features an audit log documenting all administrative actions for compliance and security purposes. Different staff roles (Admins, Moderators, Reviewers) have varying levels of access and permissions.",
+    images: ["/images/staff-portal.jpg", "/images/admin-overview.jpg"]
+  },
+  {
+    id: "event-management",
+    title: "Event Management",
+    category: "management",
+    content: "Event management is at the core of the EAC Platform. Authorised users can create new events by specifying event name, category, date, location, and participation requirements. During event creation, set the maximum number of participants, registration deadline, and qualification criteria. Events can be configured as individual or team-based competitions. Once created, events appear in the platform's event directory where participants can view details and register. Event managers can modify event details up until 48 hours before the event start time. Track participant registrations in real-time through the event dashboard. Manage event schedules, assign venues, and coordinate with participating teams. The system supports multiple events running simultaneously with independent participation and result tracking.",
+    images: ["/images/create-event.jpg", "/images/event-create-form.jpg" , "/images/webinar-event.jpg" , "/images/webinar-event-form.jpg"]
+  },
+  {
+    id: "results-scoring",
+    title: "Results & Scoring",
+    category: "admin",
+    content: "The results management system provides flexible scoring options for various competition formats. Staff can input results during or immediately after events through the results entry interface. The platform supports multiple scoring systems including points-based, match results, time-based, and custom scoring rules. Automated calculations ensure fair and accurate ranking based on defined criteria. Leaderboards are updated in real-time and visible to all participants and spectators. Historical result data is maintained for performance analysis and archival purposes. Results can be disputed within a 7-day window with staff review and resolution. The system generates performance statistics showing win-loss records, averages, rankings, and trends for individual competitors and teams.",
+    images: ["/images/basketball-pooling.jpg", "/images/results-scoring.jpg" ]
+  },
+  {
+    id: "approvals",
+    title: "Approvals",
+    category: "admin",
+    content: "The approval system ensures only legitimate participants and organisations compete on the platform. All new organisation registrations require staff approval before they can register participants. Individual player accounts may require verification depending on event requirements. The approval workflow is transparent - applicants can view their submission status and receive feedback on any rejections. Staff members access the Approvals section to review pending submissions and make decisions. Approvals typically take 3-5 business days, though expedited approvals can be processed within 24 hours for urgent cases. Approved organisations and participants receive email notifications confirming their status. The system maintains approval history for auditing purposes. Appeals or resubmissions can be made after addressing feedback provided during the initial review.",
+    images: ["/images/approvals.jpg", "/images/club approval.jpg" , "/images/request-info.jpg" , "/images/request info form.jpg"]  // Replace with your actual image file
+  },
+  {
+    id: "reports",
+    title: "Reports",
+    category: "admin",
+    content: "Comprehensive reporting capabilities help you analyse participation, performance, and platform usage. Generate participant reports showing registration, attendance, and performance data across events. Event reports provide insights into participation numbers, demographics, and outcome statistics. Staff members can access system-wide reports including user growth, approval metrics, and platform health indicators. Reports can be filtered by date range, event type, organisation, or participant demographics. Export reports in multiple formats (PDF, CSV, Excel) for further analysis and distribution. Custom reports can be created by selecting specific metrics and data fields relevant to your needs. Scheduled reports can be generated automatically and delivered via email on a regular basis. All reports include detailed analytics and visualisations to help identify trends and patterns.",
+    images: ["/images/reports.jpg", "/images/export-reports.jpg"] // Replace with your actual image file
+  },
+  {
+    id: "notifications",
+    title: "Notifications & Communication",
+    category: "technical",
+    content: "Stay informed with the EAC Platform's comprehensive notification system. Receive real-time alerts for event updates, registration deadlines, result postings, and approval status changes. Customize your notification preferences by selecting which types of alerts you want to receive and your preferred delivery method (email, SMS, or in-app). Important announcements from event organisers and staff are broadcast platform-wide. Team-specific communications allow coaches and managers to coordinate with their members. Scheduled reminders help participants remember upcoming events and deadlines. The notification history is maintained in-app for reference and review. Urgent notifications are marked with priority indicators to ensure critical messages aren't missed.",
+    image: "/images/notifications.jpg" // Replace with your actual image file
+  },
+  {
+    id: "security-privacy",
+    title: "Security & Privacy",
+    category: "technical",
+    content: "The EAC Platform prioritizes the security and privacy of all user data. All communications are encrypted using industry-standard SSL/TLS protocols. User passwords are securely hashed and never stored in plain text. Two-factor authentication (2FA) is available for enhanced account security. Personal data is protected under strict data protection regulations and compliance standards. Staff access is logged and audited for accountability. Users can control their data visibility and privacy settings through the account preferences. The platform undergoes regular security audits and penetration testing. Data backups are maintained for disaster recovery and business continuity. Sensitive information like payment data is isolated and encrypted separately.",
+    image: "" // Replace with your actual image file
+  },
+  {
+    id: "mobile-access",
+    title: "Mobile Access",
+    category: "technical",
+    content: "The EAC Platform is fully optimized for mobile devices including smartphones and tablets. The responsive design adapts seamlessly to any screen size while maintaining full functionality. The native mobile app (iOS and Android) offers enhanced features including offline mode for viewing cached data. Push notifications keep you updated on important events and deadlines even when away from your computer. Mobile users can register for events, view results, check standings, and communicate with their teams from anywhere. The mobile interface includes simplified navigation for easier access to frequently used features. Download the app from the App Store or Google Play Store for the best mobile experience.",
+    image: "" // Replace with your actual image file
+  },
+  {
+    id: "troubleshooting",
+    title: "Troubleshooting & Support",
+    category: "technical",
+    content: "Encountering issues? The troubleshooting guide covers common problems and solutions. Clear your browser cache and cookies if you experience loading issues. Ensure your internet connection is stable for optimal performance. Update your browser to the latest version for better compatibility. For account access issues, use the password recovery feature or contact support. Technical issues should be reported through the support ticket system with screenshots when possible. Response times typically range from 2-24 hours depending on urgency. The support team is available Monday-Friday, 9AM-6PM in your local timezone. For urgent issues affecting events, call the emergency hotline. Review the help documentation and video tutorials before contacting support.",
+    image: "" // Replace with your actual image file
+  },
+  {
+    id: "best-practices",
+    title: "Best Practices",
+    category: "getting-started",
+    content: "Follow these best practices to maximize your EAC Platform experience. Keep your account information current and secure with a strong password. Register early for events to secure your participation slot. Review event rules and requirements before registration to ensure eligibility. Maintain clear communication with your team or organisation managers. Submit all required documents during registration approval to avoid delays. Check notifications regularly to stay informed of important updates. Follow the platform's code of conduct and respect all community guidelines. Report inappropriate behaviour or disputes to staff promptly. Use the search functionality to find answers in documentation before asking support. Provide detailed feedback to help us improve the platform continuously.",
+    image: "" // Replace with your actual image file
+  },
+  {
+    id: "faqs",
+    title: "FAQs",
+    category: "getting-started",
+    content: `Q: How long does account verification take?
+A: Usually instantaneous after confirming your email.
+
+Q: Can I change my registered organisation?
+A: Yes, contact support to transfer your account.
+
+Q: What formats are allowed for document uploads?
+A: PDF, JPG, PNG (max 5MB).
+
+Q: How do I reset my password?
+A: Use 'Forgot Password' on the login page.
+
+Q: Are there any participation fees?
+A: Event fees vary; check individual event details.
+
+Q: Can organisations register on behalf of participants?
+A: Yes, with participant consent.
+
+Q: How are results recorded?
+A: Results are entered by event staff or uploaded in bulk.
+
+Q: Can I appeal an approval rejection?
+A: Yes, within 14 days with additional documentation.
+
+Q: Is my data secure?
+A: Yes, we use industry-standard encryption and comply with data protection regulations.
+
+Q: Where can I get technical support?
+A: Contact our support team at support@eacplatform.com or call +1-800-EAC-HELP.`,
+    image: "" // Replace with your actual image file
+  }
+];
+
+export default function Documentation() {
+  const [search, setSearch] = useState("");
+  const [expandedId, setExpandedId] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const filtered = sections.filter((s) => {
+    const matchesSearch =
+      s.title.toLowerCase().includes(search.toLowerCase()) ||
+      s.content.toLowerCase().includes(search.toLowerCase());
+    const matchesCategory = selectedCategory === "all" || s.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+
+  const sectionCards = filtered.map((section, index) => {
+    const sectionImages =
+      section.images?.length > 0
+        ? section.images
+        : section.image
+        ? [section.image, section.image2].filter(Boolean)
+        : [];
+
+    return (
+      <motion.div
+        key={section.id}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.1 }}
+      >
+        <Card className="rounded-xl overflow-hidden shadow-xl bg-white border border-gray-300 hover:border-blue-500 transition-all">
+          {sectionImages.length > 0 && (
+            <div className="relative w-full h-48 overflow-hidden bg-gray-200">
+              <img
+                src={sectionImages[0]}
+                alt={section.title}
+                className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+              />
+            </div>
+          )}
+
+          <CardContent className="p-6">
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex-1">
+                <h2 className="text-2xl font-bold text-black mb-2">{section.title}</h2>
+                <span className="inline-block px-3 py-1 bg-blue-100 text-black rounded text-sm font-medium">
+                  {CATEGORIES.find((c) => c.id === section.category)?.label}
+                </span>
+              </div>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setExpandedId(expandedId === section.id ? null : section.id)}
+                className="ml-4 p-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-black transition-colors"
+              >
+                <motion.div
+                  animate={{ rotate: expandedId === section.id ? 180 : 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ChevronDown size={24} />
+                </motion.div>
+              </motion.button>
+            </div>
+
+            <motion.div
+              initial={false}
+              animate={{
+                height: expandedId === section.id ? "auto" : 0,
+                opacity: expandedId === section.id ? 1 : 0,
+              }}
+              transition={{ duration: 0.3 }}
+              className="overflow-hidden"
+            >
+              <p className="text-black leading-relaxed mb-6 whitespace-pre-wrap">{section.content}</p>
+
+              {sectionImages.length > 0 && (
+                <div className="mt-4 p-4 bg-white border border-gray-200 rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-sm font-semibold text-black">Related Images:</span>
+                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {sectionImages.map((img, idx) => (
+                      <img
+                        key={idx}
+                        src={img}
+                        alt={`${section.title} illustration ${idx + 1}`}
+                        className="w-full max-w-md h-56 object-cover rounded border border-gray-300 cursor-pointer hover:opacity-80 transition-opacity"
+                        onClick={() => setSelectedImage(img)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </motion.div>
+
+            {expandedId !== section.id && (
+              <p className="text-gray-600 text-sm line-clamp-2">{section.content.substring(0, 150)}...</p>
+            )}
+          </CardContent>
+        </Card>
+      </motion.div>
+    );
+  });
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-black p-8">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <h1 className="text-4xl font-bold mb-3">EAC Platform Documentation</h1>
+            <p className="text-black text-lg">Complete guide to using the platform</p>
+          </motion.div>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto p-6">
+        {/* Search Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8"
+        >
+          <Input
+            placeholder="Search documentation..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full px-4 py-3 bg-white text-black placeholder-gray-400 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+          />
+        </motion.div>
+
+        {/* Category Navigation */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8"
+        >
+          <div className="flex flex-wrap gap-3">
+            {CATEGORIES.map((cat) => {
+              const Icon = cat.icon;
+              return (
+                <motion.button
+                  key={cat.id}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
+                    selectedCategory === cat.id
+                      ? "bg-gradient-to-r from-blue-500 to-purple-500 text-black shadow-lg"
+                      : "bg-gray-200 text-black hover:bg-gray-300"
+                  }`}
+                >
+                  <Icon size={18} />
+                  {cat.label}
+                </motion.button>
+              );
+            })}
+          </div>
+        </motion.div>
+
+        {/* Results Count */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-black mb-6"
+        >
+          Showing {filtered.length} of {sections.length} articles
+        </motion.div>
+
+        {/* Documentation Cards */}
+        <div className="grid gap-6">{sectionCards}</div>
+
+        {/* No Results */}
+        {filtered.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-12"
+          >
+            <AlertCircle size={48} className="mx-auto text-gray-400 mb-4" />
+            <p className="text-gray-600 text-lg">
+              No documentation found matching your search.
+            </p>
+          </motion.div>
+        )}
+
+        {/* Image Modal */}
+        {selectedImage && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
+            onClick={() => setSelectedImage(null)}
+          >
+            <div className="relative max-w-4xl max-h-full p-4">
+              <img
+                src={selectedImage}
+                alt="Full size"
+                className="max-w-full max-h-full object-contain"
+              />
+              <button
+                className="absolute top-2 right-2 text-white text-3xl hover:text-gray-300 transition-colors"
+                onClick={() => setSelectedImage(null)}
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
