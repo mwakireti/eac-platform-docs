@@ -18,6 +18,7 @@ const App = () => {
         <Route path="/management" element={<Management />} />
         <Route path="/admin_and_staff" element={<Admin_and_staff />} />
         <Route path="/technical" element={<Technical />} />
+        <Route path="*" element={<All_topics />} />
       </Route>
     </Routes>
   );
