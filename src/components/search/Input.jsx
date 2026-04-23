@@ -1,4 +1,4 @@
-export function Input({ placeholder = "", value = "", onChange = null, className = "" }) {
+const Input = ({ placeholder = "", value = "", onChange = null, className = "" }) =>{
   return (
     <input
       type="text"
@@ -9,3 +9,6 @@ export function Input({ placeholder = "", value = "", onChange = null, className
     />
   );
 }
+
+
+export default Input;
