@@ -1,17 +1,38 @@
-'use client';
+import account_registration from './account_registration.jpg';
+import account_role_form from './account_role_form.jpg';
+import account_roles from './account_roles.jpg';
+import add_participant from './add_participant.jpg';
+import admin_overview from './admin_overview.jpg';
+import approvals_team from './approvals_team.jpg';
+import approvals from './approvals.jpg';
+import basketball_pooling from './basketball_pooling.jpg';
+import basketball from './basketball.jpg';
+import best_practices from './best_practices.jpg';
+import chess_registration_form from './chess_registration_form.jpg';
+import club_approval from './club_approval.jpg';
+import create_event from './create_event.jpg';
+import culture_form from './culture_form.png';
+import event_category from './event_category.jpg';
+import event_create_form from './event_create_form.jpg';
+import event_management from './event_management.jpg';
+import export_reports from './export_reports.jpg';
+import faqs from './faqs.jpg';
+import get_on from './get_on.jpg';
+import getting_started from './getting_started.jpg';
+import hero from './hero.png';
+import mobile_access from './mobile_access.jpg';
+import orgernization_form from './orgernization_form.jpg';
+import orgernization_registration from './orgernization_registration.jpg';
 
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { motion } from "framer-motion";
+//lucide icons
 import { ChevronDown, BookOpen, Settings, Users, BarChart3, Lock, Smartphone, AlertCircle, Code } from "lucide-react";
 
-const CATEGORIES = [
-  { id: "all", label: "All Topics", icon: BookOpen },
-  { id: "getting-started", label: "Getting Started", icon: BookOpen },
-  { id: "account", label: "Account & Auth", icon: Users },
+const categories = [
+  { id: "all_topics", label: "All Topics", icon: BookOpen },
+  { id: "getting_started", label: "Getting Started", icon: BookOpen },
+  { id: "accounts_and_auth", label: "Account & Auth", icon: Users },
   { id: "management", label: "management", icon: Settings },
-  { id: "admin", label: "Admin & Staff", icon: BarChart3 },
+  { id: "admin_and_staff", label: "Admin & Staff", icon: BarChart3 },
   { id: "technical", label: "Technical", icon: Code },
 ];
 
@@ -158,216 +179,32 @@ A: Contact our support team at support@eacplatform.com or call +1-800-EAC-HELP.`
   }
 ];
 
-export default function Documentation() {
-  const [search, setSearch] = useState("");
-  const [expandedId, setExpandedId] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedImage, setSelectedImage] = useState(null);
-
-  const filtered = sections.filter((s) => {
-    const matchesSearch =
-      s.title.toLowerCase().includes(search.toLowerCase()) ||
-      s.content.toLowerCase().includes(search.toLowerCase());
-    const matchesCategory = selectedCategory === "all" || s.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
-
-  const sectionCards = filtered.map((section, index) => {
-    const sectionImages =
-      section.images?.length > 0
-        ? section.images
-        : section.image
-        ? [section.image, section.image2].filter(Boolean)
-        : [];
-
-    return (
-      <motion.div
-        key={section.id}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: index * 0.1 }}
-      >
-        <Card className="rounded-xl overflow-hidden shadow-xl bg-white border border-gray-300 hover:border-blue-500 transition-all">
-          {sectionImages.length > 0 && (
-            <div className="relative w-full h-48 overflow-hidden bg-gray-200">
-              <img
-                src={sectionImages[0]}
-                alt={section.title}
-                className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
-              />
-            </div>
-          )}
-
-          <CardContent className="p-6">
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex-1">
-                <h2 className="text-2xl font-bold text-black mb-2">{section.title}</h2>
-                <span className="inline-block px-3 py-1 bg-blue-100 text-black rounded text-sm font-medium">
-                  {CATEGORIES.find((c) => c.id === section.category)?.label}
-                </span>
-              </div>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setExpandedId(expandedId === section.id ? null : section.id)}
-                className="ml-4 p-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-black transition-colors"
-              >
-                <motion.div
-                  animate={{ rotate: expandedId === section.id ? 180 : 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <ChevronDown size={24} />
-                </motion.div>
-              </motion.button>
-            </div>
-
-            <motion.div
-              initial={false}
-              animate={{
-                height: expandedId === section.id ? "auto" : 0,
-                opacity: expandedId === section.id ? 1 : 0,
-              }}
-              transition={{ duration: 0.3 }}
-              className="overflow-hidden"
-            >
-              <p className="text-black leading-relaxed mb-6 whitespace-pre-wrap">{section.content}</p>
-
-              {sectionImages.length > 0 && (
-                <div className="mt-4 p-4 bg-white border border-gray-200 rounded-lg">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-sm font-semibold text-black">Related Images:</span>
-                  </div>
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {sectionImages.map((img, idx) => (
-                      <img
-                        key={idx}
-                        src={img}
-                        alt={`${section.title} illustration ${idx + 1}`}
-                        className="w-full max-w-md h-56 object-cover rounded border border-gray-300 cursor-pointer hover:opacity-80 transition-opacity"
-                        onClick={() => setSelectedImage(img)}
-                      />
-                    ))}
-                  </div>
-                </div>
-              )}
-            </motion.div>
-
-            {expandedId !== section.id && (
-              <p className="text-gray-600 text-sm line-clamp-2">{section.content.substring(0, 150)}...</p>
-            )}
-          </CardContent>
-        </Card>
-      </motion.div>
-    );
-  });
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-black p-8">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <h1 className="text-4xl font-bold mb-3">EAC Platform Documentation</h1>
-            <p className="text-black text-lg">Complete guide to using the platform</p>
-          </motion.div>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto p-6">
-        {/* Search Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
-          <Input
-            placeholder="Search documentation..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full px-4 py-3 bg-white text-black placeholder-gray-400 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-          />
-        </motion.div>
-
-        {/* Category Navigation */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
-          <div className="flex flex-wrap gap-3">
-            {CATEGORIES.map((cat) => {
-              const Icon = cat.icon;
-              return (
-                <motion.button
-                  key={cat.id}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setSelectedCategory(cat.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
-                    selectedCategory === cat.id
-                      ? "bg-gradient-to-r from-blue-500 to-purple-500 text-black shadow-lg"
-                      : "bg-gray-200 text-black hover:bg-gray-300"
-                  }`}
-                >
-                  <Icon size={18} />
-                  {cat.label}
-                </motion.button>
-              );
-            })}
-          </div>
-        </motion.div>
-
-        {/* Results Count */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-black mb-6"
-        >
-          Showing {filtered.length} of {sections.length} articles
-        </motion.div>
-
-        {/* Documentation Cards */}
-        <div className="grid gap-6">{sectionCards}</div>
-
-        {/* No Results */}
-        {filtered.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-12"
-          >
-            <AlertCircle size={48} className="mx-auto text-gray-400 mb-4" />
-            <p className="text-gray-600 text-lg">
-              No documentation found matching your search.
-            </p>
-          </motion.div>
-        )}
-
-        {/* Image Modal */}
-        {selectedImage && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
-            onClick={() => setSelectedImage(null)}
-          >
-            <div className="relative max-w-4xl max-h-full p-4">
-              <img
-                src={selectedImage}
-                alt="Full size"
-                className="max-w-full max-h-full object-contain"
-              />
-              <button
-                className="absolute top-2 right-2 text-white text-3xl hover:text-gray-300 transition-colors"
-                onClick={() => setSelectedImage(null)}
-              >
-                ×
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+const assets = {
+    account_registration,
+    account_role_form,
+    account_roles,
+    add_participant,
+    admin_overview,
+    approvals_team,
+    approvals,
+    basketball_pooling,
+    basketball,
+    best_practices,
+    chess_registration_form,
+    club_approval,
+    create_event,
+    culture_form,
+    event_category,
+    event_create_form,
+    event_management,
+    export_reports,
+    faqs,
+    get_on,
+    getting_started,
+    hero,
+    mobile_access,
+    orgernization_form,
+    orgernization_registration
 }
+
+export default { assets, categories, sections };
