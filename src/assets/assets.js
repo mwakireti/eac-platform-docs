@@ -31,7 +31,7 @@ const categories = [
   { id: "all_topics", label: "All Topics", icon: BookOpen },
   { id: "getting_started", label: "Getting Started", icon: BookOpen },
   { id: "accounts_and_auth", label: "Account & Auth", icon: Users },
-  { id: "management", label: "management", icon: Settings },
+  { id: "management", label: "Management", icon: Settings },
   { id: "admin_and_staff", label: "Admin & Staff", icon: BarChart3 },
   { id: "technical", label: "Technical", icon: Code },
 ];
@@ -47,7 +47,7 @@ Welcome to the **EAC Platform** — a centralized system designed to manage even
 
 This platform supports multiple user roles including participants, organizational representatives, administrators, and staff. Each role has access to tailored features designed to simplify their tasks.
 
-## **Steps to begin using the platform:**
+### **Steps to begin using the platform:**
 
 1. Create an account or log in
 2. Complete your profile information
@@ -67,7 +67,7 @@ If you're new, we recommend starting with account setup and exploring the "Getti
   content: `
  Managing your account is simple and secure on the EAC Platform. 
 
-## **Steps to register:**
+### **Steps to register:**
 1. Navigate to the registration page
 2. Enter your full name, email address, and password
 3. Confirm your email via the verification link sent to your inbox
@@ -76,7 +76,7 @@ If you're new, we recommend starting with account setup and exploring the "Getti
 - Use your registered email and password
 - Ensure your credentials are correct and case-sensitive
 
-## **Security features include:**
+### **Security features include:**
 - Password reset via email
 - Email verification for new accounts
 - Session management to protect your data

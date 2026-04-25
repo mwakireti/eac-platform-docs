@@ -2,8 +2,9 @@ import React from 'react';
 import Header from './Header';
 import Search from '../search/Search';
 import { Outlet } from 'react-router';
-import Categorynav from './Categorynav';
+import Categorynav from './navigation/Categorynav';
 import ResultsCount from './ResultsCount';
+import Sidenav from './navigation/Sidenav';
 
 const Layout = () => {
     return (
@@ -18,13 +19,14 @@ const Layout = () => {
             <div className="max-w-6xl mx-auto flex gap-6 px-4 py-6">
                 {/* Sidebar (optional for now) */}
                 <aside className="w-64 hidden md:block">
-                    {/* You can add navigation here later */}
-                    EAC DOCUMENTATION
+                    <Sidenav />
                 </aside>
 
                 {/* Main Content */}
                 <main className="flex-1">
-                    <Outlet />
+                    <div className='max-h-screen overflow-y-scroll  scrollbar-hide'>
+                        <Outlet />
+                    </div>
                 </main>
             </div>
         </div>
