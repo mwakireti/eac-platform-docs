@@ -26,6 +26,7 @@ import orgernization_registration from './orgernization_registration.jpg';
 
 //lucide icons
 import { ChevronDown, BookOpen, Settings, Users, BarChart3, Lock, Smartphone, AlertCircle, Code } from "lucide-react";
+import { path } from 'motion/react-client';
 
 const categories = [
   { id: "all_topics", label: "All Topics", icon: BookOpen },
@@ -40,6 +41,8 @@ const sections = [
   {
     id: "getting-started",
     title: "Getting Started",
+    path: "/getting_started",
+    description: "Start here! This guide walks you through registration, sign in  and all you need to start and use the platform, including account setup, navigation tips, and best practices for a smooth experience.",
     category: "getting-started",
     images: [getting_started, get_on],
     content: `
@@ -62,6 +65,8 @@ If you're new, we recommend starting with account setup and exploring the "Getti
   {
   id: "account-auth",
     title: "Account & Authentication",
+    path: "/accounts_and_auth",
+    description: "Learn how to create and manage your account, including registration, login, password management, and security features to keep your information safe.",
     category: "account",
   images: [account_registration, account_role_form, account_roles],
   content: `
@@ -85,7 +90,106 @@ If you forget your password, click *"Forgot Password"* and follow the instructio
 
 Always use a strong password and avoid sharing your login credentials.
 `
-},
+  },
+  {
+    id: "management",
+    title: "Management",
+    path: "/management",
+    description: "Discover how to manage your activities, events, and teams effectively on the EAC Platform.",
+    category: "management",
+    images: [create_event, event_create_form, event_management],
+    content: `
+The Management section of the EAC Platform is designed to give you full control over your events, teams, and participant activities from a single, intuitive interface.
+
+### Event Management
+Create, update, and manage events with ease. You can define event details, schedules, locations, and participant requirements. The platform allows you to monitor event progress in real time and make adjustments whenever necessary.
+
+### Team Coordination
+Organise your teams efficiently by assigning roles, managing responsibilities, and tracking performance. Whether you're working with small groups or large teams, the platform ensures clear communication and accountability.
+
+### Participant Management
+Handle participant registration, approvals, and engagement seamlessly. You can track attendance, manage participant data, and ensure a smooth experience from onboarding to event completion.
+
+### Activity Tracking
+Stay informed with detailed insights into ongoing activities. Monitor progress, identify bottlenecks, and ensure everything runs according to plan.
+
+### Best Practices
+- Keep your event details up to date to avoid confusion
+- Assign clear roles to team members for better coordination
+- Regularly monitor activity progress to stay on track
+- Use the platform's tools to communicate effectively with participants
+
+With these tools, the EAC Platform empowers you to streamline operations, improve collaboration, and deliver successful events consistently.
+`
+  },
+  {
+    id: "admin-staff",
+    title: "Admin & Staff",
+    path: "/admin-staff",
+    description: "Learn about the administrative tools and features available for staff members and platform administrators.",
+    category: "admin",
+    images: [admin_overview],
+   content: `
+The Admin & Staff section provides powerful tools that enable administrators and staff members to oversee platform operations, manage users, and maintain system integrity efficiently.
+
+### User Management
+Administrators can create, update, and manage user accounts across the platform. Assign roles, control access levels, and ensure that each user has the appropriate permissions based on their responsibilities.
+
+### Role & Permission Control
+Define and manage roles for staff members to maintain a secure and organised system. This ensures that sensitive actions and data are only accessible to authorised personnel.
+
+### Event Oversight
+Monitor and manage all events across the platform. Admins can review event details, approve or reject submissions, and ensure that all activities align with organisational standards.
+
+### Data & Reporting
+Access key insights through reports and analytics. Track platform usage, user engagement, and event performance to support informed decision-making.
+
+### System Configuration
+Customise platform settings to suit organisational needs. This may include updating system preferences, managing categories, and maintaining overall platform structure.
+
+### Best Practices
+- Assign roles carefully to maintain security and accountability
+- Regularly review user access and permissions
+- Monitor platform activity to detect and resolve issues early
+- Keep system settings updated to reflect organisational changes
+
+With these tools, administrators and staff can maintain control, ensure smooth operations, and support users effectively across the platform.
+`
+  },
+  {
+    id: "technical",
+    title: "Technical",
+    path: "/technical",
+    description: "Explore the technical aspects and features of the EAC Platform.",
+    category: "technical",
+    images: [approvals, approvals_team],
+    content: `
+The Technical section provides insight into the underlying features and system capabilities that power the EAC Platform. It is designed to help users understand how processes work behind the scenes and how to make the most of the platform’s advanced functionality.
+
+### Workflow & Approvals
+The platform includes structured workflows to ensure that actions such as event creation, updates, and requests go through proper approval channels. This helps maintain consistency, accountability, and quality across all activities.
+
+### System Processes
+Understand how different components of the platform interact, from data handling to automated processes. This includes how actions trigger updates, notifications, and system responses.
+
+### Integration Capabilities
+The EAC Platform is built to support integrations with other tools and services. This allows for improved efficiency, data sharing, and streamlined operations across systems.
+
+### Performance & Reliability
+The platform is designed to handle multiple users and activities efficiently. It ensures stable performance, secure data handling, and minimal downtime for a smooth user experience.
+
+### Security & Access Control
+Technical safeguards are in place to protect user data and system integrity. Role-based access, authentication, and approval layers ensure that only authorised actions are performed.
+
+### Best Practices
+- Follow defined workflows to ensure approvals are processed correctly
+- Avoid bypassing system processes to maintain data integrity
+- Regularly review system updates and changes
+- Report any unexpected behaviour to maintain platform reliability
+
+This section helps you better understand how the platform operates, enabling you to work more efficiently and confidently within the system.
+`
+  }
 
   // {
   //   id: "user-dashboard",     title: "User Dashboard For Clubs & Organisations",     category: "management",     content: "Your personal dashboard is your command center within the EAC Platform. Here you can view your registered events, participation history, profile information, and upcoming competitions. The dashboard displays a summary of your activity, including pending approvals, event schedules, and important notifications. Update your profile by clicking on 'View Profile' to edit your personal information, contact details, and preferences. Manage your event participation from the 'MY DASHBOARD' section where you can view event details, schedules, and your participation status. The dashboard also includes a notification center showing system announcements, event updates, and approval statuses.",

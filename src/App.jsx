@@ -6,12 +6,13 @@ import Management from './pages/Management';
 import Technical from './pages/Technical';
 import Layout from './components/layout/Layout';
 import Admin_and_staff from './pages/Admin_and_staff';
+import Home from './pages/Home';
 
 const App = () => {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<All_topics />} />
+        <Route path="/" element={<Home />} />
         <Route path="/all_topics" element={<All_topics />} />
         <Route path="/getting_started" element={<Getting_started />} />
         <Route path="/accounts_and_auth" element={<Accounts_Auth />} />

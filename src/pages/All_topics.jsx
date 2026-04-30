@@ -3,7 +3,6 @@ import assets from '../assets/assets';
 import { motion } from 'motion/react';
 import DocPage from '../components/ui/Doc';
 
-
 const all_topics = () => {
 
   return (
